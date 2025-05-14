@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { Picker } from '@react-native-picker/picker';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -40,7 +41,7 @@ export default function LoginScreen() {
   return (
     <ImageBackground
       source={{
-        uri: 'https://plus.unsplash.com/premium_photo-1700695638084-5f46e469e223?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmFybSUyMHByb2R1Y2V8ZW58MHx8MHx8fDA%3D',
+        uri: 'https://plus.unsplash.com/premium_photo-1686285540821-d9a84ef4b7ac?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZmFybSUyMHByb2R1Y2V8ZW58MHx8MHx8fDA%3D',
       }}
       resizeMode="cover"
       style={styles.background}
@@ -51,10 +52,14 @@ export default function LoginScreen() {
           style={styles.innerContainer}
         >
           <View style={styles.loginBox}>
-            {/* Gradient Title */}
+            {/* Title with Gradient */}
             <Animated.View style={{ opacity: fadeAnim }}>
               <MaskedView
-                maskElement={<Text style={styles.title}>{isSignUp ? 'Create an Account' : 'Welcome to SokoFresh'}</Text>}
+                maskElement={
+                  <Text style={styles.title}>
+                    {isSignUp ? 'Create an Account' : 'Welcome to SokoFresh'}
+                  </Text>
+                }
               >
                 <LinearGradient
                   colors={['#34A853', '#FDD835']}
@@ -68,34 +73,48 @@ export default function LoginScreen() {
               </MaskedView>
             </Animated.View>
 
-            {/* Sign Up Form */}
+            {/* Sign Up: Full Name */}
             {isSignUp && (
-              <>
-                <TextInput
-                  placeholder="Full Name"
-                  placeholderTextColor="#bbb"
-                  style={styles.input}
-                />
-              </>
+              <TextInput
+                placeholder="Full Name"
+                placeholderTextColor="#ccc"
+                style={styles.input}
+              />
             )}
 
-            {/* Shared Inputs */}
-            <TextInput
-              placeholder="Phone Number"
-              placeholderTextColor="#bbb"
-              style={styles.input}
-              keyboardType="phone-pad"
-            />
-            <TextInput
-              placeholder="Password"
-              placeholderTextColor="#bbb"
-              secureTextEntry
-              style={styles.input}
-            />
+            {/* Phone Input */}
+            <View style={styles.inputContainer}>
+              <Ionicons name="call-outline" size={20} color="#fff" style={styles.icon} />
+              <TextInput
+                placeholder="Phone Number"
+                placeholderTextColor="#ccc"
+                style={styles.inputNoBorder}
+                keyboardType="phone-pad"
+              />
+            </View>
 
-            {/* Role Picker (Sign Up Only) */}
+            {/* Password Input */}
+            <View style={styles.inputContainer}>
+              <Ionicons name="lock-closed-outline" size={20} color="#fff" style={styles.icon} />
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="#ccc"
+                secureTextEntry
+                style={styles.inputNoBorder}
+              />
+            </View>
+
+            {/* Forgot Password */}
+            {!isSignUp && (
+              <TouchableOpacity style={styles.forgotPassword}>
+                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+              </TouchableOpacity>
+            )}
+
+            {/* Role Picker for Sign Up */}
             {isSignUp && (
-              <View style={styles.pickerContainer}>
+              <View style={styles.inputContainer}>
+                <Ionicons name="people-outline" size={20} color="#fff" style={styles.icon} />
                 <Picker
                   selectedValue={role}
                   onValueChange={(itemValue) => setRole(itemValue)}
@@ -114,13 +133,15 @@ export default function LoginScreen() {
               <Text style={styles.buttonText}>{isSignUp ? 'Sign Up' : 'Log In'}</Text>
             </TouchableOpacity>
 
-            {/* Toggle Text */}
+            {/* Toggle Login/Signup */}
             <TouchableOpacity onPress={handleToggle}>
               <MaskedView
                 maskElement={
                   <Text style={styles.linkText}>
                     {isSignUp ? 'Already have an account? ' : 'Don’t have an account? '}
-                    <Text style={styles.linkUnderline}>{isSignUp ? 'Log In' : 'Sign Up'}</Text>
+                    <Text style={styles.linkUnderline}>
+                      {isSignUp ? 'Log In' : 'Sign Up'}
+                    </Text>
                   </Text>
                 }
               >
@@ -131,7 +152,9 @@ export default function LoginScreen() {
                 >
                   <Text style={[styles.linkText, { opacity: 0 }]}>
                     {isSignUp ? 'Already have an account? ' : 'Don’t have an account? '}
-                    <Text style={styles.linkUnderline}>{isSignUp ? 'Log In' : 'Sign Up'}</Text>
+                    <Text style={styles.linkUnderline}>
+                      {isSignUp ? 'Log In' : 'Sign Up'}
+                    </Text>
                   </Text>
                 </LinearGradient>
               </MaskedView>
@@ -149,7 +172,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'flex-end',
     paddingHorizontal: 24,
   },
@@ -166,6 +189,27 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     letterSpacing: 0.5,
     textAlign: 'center',
+    color: '#fff',
+  },
+  inputContainer: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    marginBottom: 18,
+  },
+  icon: {
+    marginRight: 8,
+  },
+  inputNoBorder: {
+    flex: 1,
+    paddingVertical: 14,
+    color: '#fff',
+    fontSize: 16,
   },
   input: {
     width: '100%',
@@ -179,18 +223,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  pickerContainer: {
-    width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    borderRadius: 10,
-    borderColor: '#fff',
-    borderWidth: 1,
-    marginBottom: 18,
-    overflow: 'hidden',
-  },
   picker: {
-    height: 50,
+    flex: 1,
     color: '#fff',
+    backgroundColor: 'transparent',
+    height: 50,
+  },
+  forgotPassword: {
+    alignSelf: 'flex-end',
+    marginBottom: 12,
+  },
+  forgotPasswordText: {
+    color: '#fff',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   },
   button: {
     width: '100%',
@@ -215,8 +261,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     textAlign: 'center',
+    color: '#fff',
   },
   linkUnderline: {
     textDecorationLine: 'underline',
+    fontWeight: 'bold',
   },
 });
