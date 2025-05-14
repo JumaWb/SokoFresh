@@ -1,8 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import {
     Animated,
@@ -16,8 +16,11 @@ import {
     View,
 } from 'react-native';
 
+
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 export default function Login() {
-  const router = useRouter();
+    
+  const navigation = useNavigation<LoginScreenNavigationProp>(); // useNavigation hook for navigation
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [isSignUp, setIsSignUp] = useState(false);
   const [role, setRole] = useState('Farmer');
@@ -31,7 +34,8 @@ export default function Login() {
   }, []);
 
   const handleLogin = () => {
-    router.push('/home');
+    // Correct navigation method
+    navigation.navigate('Home'); // Replace 'Home' with your target screen name
   };
 
   const handleToggle = () => {

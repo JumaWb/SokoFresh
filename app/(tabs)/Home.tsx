@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 
 import {
   Image,
@@ -24,7 +24,7 @@ const categorizedProducts = {
       image: 'https://images.unsplash.com/photo-1591171551239-80a5eddd627a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlc2glMjB0b21hdG9lc3xlbnwwfHwwfHx8MA%3D%3D',
     },
     {
-      id: '1',
+      id: '2',
       name: 'Bananas',
       farmer: 'Mary Joseph',
       location: 'Kisii',
@@ -35,7 +35,7 @@ const categorizedProducts = {
   ],
   Cereals: [
     {
-      id: '2',
+      id: '3',
       name: 'Green Maize',
       farmer: 'John Mwangi',
       location: 'Murang’a',
@@ -44,7 +44,7 @@ const categorizedProducts = {
       image: 'https://images.unsplash.com/photo-1651667343153-6dc318e27e41',
     },
     {
-      id: '3',
+      id: '4',
       name: 'Onions',
       farmer: 'Brian Juma',
       location: 'Murang’a',
@@ -55,7 +55,7 @@ const categorizedProducts = {
   ],
   Livestock: [
     {
-      id: '4',
+      id: '5',
       name: 'Cows',
       farmer: 'Mary Kaiteny',
       location: 'Murang’a',
@@ -64,7 +64,7 @@ const categorizedProducts = {
       image: 'https://images.unsplash.com/photo-1580570598977-4b2412d01bbc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNvd3N8ZW58MHx8MHx8fDA%3D',
     },
     {
-      id: '4',
+      id: '6',
       name: 'Chickens',
       farmer: 'Mary Kaiteny',
       location: 'Murang’a',
@@ -75,8 +75,10 @@ const categorizedProducts = {
   ],
 };
 
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 export default function Home() {
-  const router = useRouter();
+  
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const renderSection = (title, items) => (
     <View style={{ marginBottom: 24 }}>
@@ -141,7 +143,9 @@ export default function Home() {
 
       {/* Bottom Nav */}
       <View style={styles.bottomNav}>
-        <Ionicons name="home" size={24} color="#34A853" />
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Ionicons name="home" size={24} color="#34A853" />
+        </TouchableOpacity>
         <Ionicons name="receipt-outline" size={24} color="#777" />
         <Ionicons name="wallet-outline" size={24} color="#777" />
         <Ionicons name="person-outline" size={24} color="#777" />
