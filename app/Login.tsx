@@ -16,7 +16,7 @@ import {
     View,
 } from 'react-native';
 
-export default function LoginScreen() {
+export default function Login() {
   const router = useRouter();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [isSignUp, setIsSignUp] = useState(false);
